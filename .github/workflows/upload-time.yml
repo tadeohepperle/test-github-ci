@@ -1,0 +1,27 @@
+name: Upload Time
+
+on:
+  workflow_dispatch: {}
+
+jobs:
+  fmt:
+    name: Upload Time
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout sources
+        uses: actions/checkout@v4
+
+      - name: Create time file and compress
+        run: |
+          echo $(date +"%Y-%m-%d %H:%M:%S") > time.txt
+          tar -zcvf time.txt.tar.gz time.txt
+          tar -xzvf time.txt.tar.gz
+
+      - name: Upload time file
+        uses: actions/upload-artifact@v3
+        with:
+          name: time
+          path: |
+            time.txt.tar.gz
+          retention-days: 2
+          if-no-files-found: error

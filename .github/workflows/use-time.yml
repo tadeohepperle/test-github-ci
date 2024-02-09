@@ -1,0 +1,20 @@
+name: Use Time
+
+on:
+  workflow_dispatch: {}
+
+jobs:
+  fmt:
+    name: Use Time
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download time file
+        uses: dawidd6/action-download-artifact@268677152d06ba59fcec7a7f0b5d961b6ccd7e1e
+        with:
+          workflow: upload-time.yml
+          name: time
+
+      - name: Decrompress time file
+        run: |
+          tar -xzvf time.txt.tar.gz
+          cat time.txt
